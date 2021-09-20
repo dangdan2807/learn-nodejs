@@ -6,3 +6,11 @@ h1 {
 .card-course-item {
     margin-top: 16px;
 }
+
+.card-body {
+    list-style: none;
+    & a:first-child {
+        text-decoration: none;
+        color: $black-color;
+    }
+}
