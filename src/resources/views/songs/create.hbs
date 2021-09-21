@@ -1,0 +1,22 @@
+<div class='mt-4'>
+    <h3>Đăng bài hát</h3>
+    <form method='POST' action='/songs/store'>
+        <div class='mb-3'>
+            <label for='name' class='form-label'>Tên bài hát: </label>
+            <input type='text' class='form-control' id='name' name='name' placeholder='Nhập tên bài hát....' />
+        </div>
+        <div class='mb-3'>
+            <label for='singer' class='form-label'>Người thể hiện: </label>
+            <input type='text' class='form-control' id='singer' name='singer' placeholder='Nhập tên bài hát....' />
+        </div>
+        <div class='mb-3'>
+            <label for='description' class='form-label'>Mô tả: </label>
+            <textarea class='form-control' id='description' name='description' placeholder='Nhập mô tả...'></textarea>
+        </div>
+        <div class='mb-3'>
+            <label for='videoId' class='form-label'>Video ID: </label>
+            <input type='text' class='form-control' id='videoId' name='videoId' placeholder='Nhập video ID...' />
+        </div>
+        <button type='submit' class='btn btn-primary'>Thêm bài hát</button>
+    </form>
+</div>
