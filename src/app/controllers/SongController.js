@@ -41,6 +41,13 @@ class SongController {
             .then(() => res.redirect('/me/stored/songs'))
             .catch(next);
     }
+
+    // [DELETE] /Song/:id
+    delete(req, res, next) {
+        Song.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
 }
 
 module.exports = new SongController();

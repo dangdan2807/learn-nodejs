@@ -7,6 +7,7 @@ router.get('/create', songController.create);
 router.post('/store', songController.store);
 router.get('/:id/edit', songController.edit);
 router.put('/:id', songController.update);
+router.delete('/:id', songController.delete);
 router.get('/:slug', songController.show);
 
 module.exports = router;
