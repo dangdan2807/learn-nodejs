@@ -10,6 +10,15 @@ class MeController {
             })
             .catch(next);
     }
+
+    // [GET] /me/trash/songs
+    trashSongs(req, res, next) {
+        Song.findDeleted({})
+            .then((songs) => {
+                res.render('me/trash-songs', { songs: multipleMongooseToObject(songs) });
+            })
+            .catch(next);
+    }
 }
 
 module.exports = new MeController();

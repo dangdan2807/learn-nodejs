@@ -7,7 +7,10 @@ router.get('/create', songController.create);
 router.post('/store', songController.store);
 router.get('/:id/edit', songController.edit);
 router.put('/:id', songController.update);
+router.patch('/:id/restore', songController.restore);
 router.delete('/:id', songController.delete);
+router.delete('/:id/force', songController.forceDestroy);
 router.get('/:slug', songController.show);
 
 module.exports = router;
+

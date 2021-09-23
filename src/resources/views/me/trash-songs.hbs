@@ -1,7 +1,7 @@
 <div class='mt-4'>
     <div>
-        <h3>Khóa học của tôi</h3>
-        <a href='/me/trash/songs'>Thùng rác</a>
+        <a href='/me/stored/songs'>Danh sách bài hát</a>
+        <h3>Khóa học đã xóa</h3>
     </div>
     <table class='table mt-4'>
         <thead>
@@ -20,22 +20,21 @@
                     <td>{{this.singer}}</td>
                     <td>{{this.createdAt}}</td>
                     <td>
-                        <a href='/songs/{{this._id}}/edit' class='btn btn-link'>Sửa</a>
+                        <a href='' class='btn btn-link btn-restore' data-id='{{this._id}}'>Khôi phục</a>
                         <a
                             href='/songs/{{this._id}}/edit'
                             class='btn btn-link'
                             data-toggle='modal'
                             data-target='#delete-songs-modal'
                             data-id='{{this._id}}'
-                            data-name='{{this.name}}'
-                        >Xóa</a>
+                        >Xóa vĩnh viễn</a>
                     </td>
                 </tr>
             {{else}}
                 <tr>
                     <td colspan='5' class='text-center'>
-                        Bạn chưa đăng bài hát nào
-                        <a href='/songs/create'>Đăng bài hát</a>
+                        Thùng rác trống
+                        <a href='/me/stored/songs'>Danh sách bài hát</a>
                     </td>
                 </tr>
             {{/each}}
@@ -48,16 +47,16 @@
     <div class='modal-dialog' role='document'>
         <div class='modal-content'>
             <div class='modal-header'>
-                <h5 class='modal-title'>Xác nhận xóa bài hát</h5>
+                <h5 class='modal-title'>Xác nhận xóa bài hát vĩnh viễn</h5>
                 <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>
                 </button>
             </div>
             <div class='modal-body'>
-                <p>Bạn có chắc chắn xóa bài hát này ?</p>
+                <p>Xóa bài hát này không khôi phục lại được nữa. Bạn có chắc chắn muốn xóa bài hát này?</p>
             </div>
             <div class='modal-footer'>
-                <button id='btn-delete-song' type='button' class='btn btn-danger'>Xóa bài hát</button>
+                <button id='btn-delete-song' type='button' class='btn btn-danger'>Xóa vĩnh viễn</button>
                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Hủy</button>
             </div>
         </div>
@@ -65,24 +64,35 @@
 </div>
 
 <form name='delete-song-form' method='POST'></form>
+<form name='restore-song-form' method='POST'></form>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() { 
-        var songId; 
-        var deleteForm = document.forms['delete-song-form']; 
-        var btnDeleteSong = document.getElementById('btn-delete-song'); 
-        
-        // When dialog Confirm clicked 
-        $('#delete-songs-modal').on('show.bs.modal', function (event) { 
-            var button = $(event.relatedTarget)
-            var id = button.data('id'); 
+    document.addEventListener('DOMContentLoaded', function () {
+        var songId;
+        var deleteForm = document.forms['delete-song-form'];
+        var restoreForm = document.forms['restore-song-form'];
+        var btnDeleteSong = document.getElementById('btn-delete-song');
+        var btnRestore = $('.btn-restore');
+        // When dialog Confirm clicked
+        $('#delete-songs-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
             var name = button.data('name');
-            songId = id; 
-        }); 
-        
+            songId = id;
+        });
+
         // When delete song btn clicked
-        btnDeleteSong.onclick = function() { deleteForm.action = `/songs/${songId}?_method=DELETE`; 
-        deleteForm.submit(); 
-        }
-    })
+        btnDeleteSong.onclick = function () {
+            deleteForm.action = `/songs/${songId}/force?_method=DELETE`;
+            deleteForm.submit();
+        };
+
+        // restore btn clicked
+        btnRestore.click(function (e) {
+            e.preventDefault();
+            songId = $(this).data('id');
+            restoreForm.action = `/songs/${songId}/restore?_method=PATCH`;
+            restoreForm.submit();
+        });
+    });
 </script>

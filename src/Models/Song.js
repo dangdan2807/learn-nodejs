@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
-
-mongoose.plugin(slug);
+var mongooseDelete = require('mongoose-Delete');
 
 const Schema = mongoose.Schema;
 const Song = new Schema(
     {
-        name: { type: String, required: true },
+        name: { type: String, requireD: true },
         description: { type: String },
         image: { type: String },
         slug: { type: String },
@@ -18,5 +17,11 @@ const Song = new Schema(
         timestamps: true,
     },
 );
+
+mongoose.plugin(slug);
+Song.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: 'all',
+});
 
 module.exports = mongoose.model('Song', Song);

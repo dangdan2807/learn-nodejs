@@ -18,11 +18,10 @@ class SongController {
 
     // [POST] /Song/store
     store(req, res, next) {
-        const formData = req.body;
-        formData.image = `https://img.youtube.com/vi/${formData.videoId}/sddefault.jpg`;
-        const song = new Song(formData);
+        req.body.image = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`;
+        const song = new Song(req.body);
         song.save()
-            .then(() => res.redirect('/'))
+            .then(() => res.redirect('/me/stored/songs'))
             .catch((error) => {});
     }
 
@@ -44,7 +43,21 @@ class SongController {
 
     // [DELETE] /Song/:id
     delete(req, res, next) {
+        Song.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+    
+    // [DELETE] /Song/:id/force
+    forceDestroy(req, res, next) {
         Song.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [PATCH] /Song/:id/restore
+    restore(req, res, next) {
+        Song.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }
