@@ -5,8 +5,8 @@ h1 {
 
 .card-song-item {
     margin-top: 16px;
-    max-height: 558px;
-    min-height: 558px;
+    max-height: 450px;
+    min-height: 450px;
     overflow: hidden;
 }
 
@@ -28,4 +28,8 @@ h1 {
 .checkbox-select-all-options {
     width: 160px;
     margin: 0 16px;
+}
+
+.btn-mb-add {
+    margin-top: -28px;
 }

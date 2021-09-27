@@ -70,6 +70,16 @@ class SongController {
                     .then(() => res.redirect('back'))
                     .catch(next);
                 break;
+            case 'destroy':
+                Song.deleteMany({ _id: { $in: req.body.songIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+            case 'restore':
+                Song.restore({ _id: { $in: req.body.songIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
             default:
                 res.json({ message: 'Invalid action'})
                 break;
