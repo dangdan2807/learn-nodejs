@@ -22,7 +22,7 @@ class SongController {
         const song = new Song(req.body);
         song.save()
             .then(() => res.redirect('/me/stored/songs'))
-            .catch((error) => {});
+            .catch(next);
     }
 
     // [GET] /songs/:id/edit
@@ -47,7 +47,7 @@ class SongController {
             .then(() => res.redirect('back'))
             .catch(next);
     }
-    
+
     // [DELETE] /songs/:id/force
     forceDestroy(req, res, next) {
         Song.deleteOne({ _id: req.params.id })
@@ -81,9 +81,9 @@ class SongController {
                     .catch(next);
                 break;
             default:
-                res.json({ message: 'Invalid action'})
+                res.json({ message: 'Invalid action' });
                 break;
-            }
+        }
     }
 }
 

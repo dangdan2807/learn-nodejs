@@ -23,7 +23,10 @@
         <thead>
             <tr>
                 <th scope='col'>#</th>
-                <th scope='col'>STT</th>
+                <th scope='col' style='width: 70px'>
+                    ID
+                    {{{sortable '_id' _sort}}}
+                </th>
                 <th scope='col'>
                     Tên bài hát
                     {{{sortable 'name' _sort}}}
@@ -41,38 +44,36 @@
         </thead>
         <tbody>
             {{#each songs}}
-                <tr>
-                    <td>
-                        <div class='form-check'>
-                            <input class='form-check-input' type='checkbox' name='songIds[]' value='{{this._id}}' />
-                            <label class='form-check-label' for='defaultCheck1'>
-                            </label>
-                        </div>
-                    </td>
-                    <td scope='row'>{{sum @index 1}}</td>
-                    <td>{{this.name}}</td>
-                    <td>{{this.singer}}</td>
-                    <td>{{this.description}}</td>
-                    <td>{{this.createdAt}}</td>
-                    <td>
-                        <a href='/songs/{{this._id}}/edit' class='btn btn-primary btn-sm'>Sửa</a>
-                        <a
-                            href='/songs/{{this._id}}/edit'
-                            class='btn btn-danger btn-sm mt-1'
-                            data-toggle='modal'
-                            data-target='#delete-songs-modal'
-                            data-id='{{this._id}}'
-                            data-name='{{this.name}}'
-                        >Xóa</a>
-                    </td>
-                </tr>
+            <tr class='row-hover-color'>
+                <td>
+                    <div class='form-check'>
+                        <input class='form-check-input' type='checkbox' name='songIds[]' value='{{this._id}}' />
+                        <label class='form-check-label' for='defaultCheck1'>
+                        </label>
+                    </div>
+                </td>
+                <td scope='row'>{{this._id}}</td>
+                <td>
+                    <a href='/songs/{{this.slug}}' class='font-color-black'>
+                        {{this.name}}
+                    </a>
+                </td>
+                <td>{{this.singer}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href='/songs/{{this._id}}/edit' class='btn btn-primary btn-sm'>Sửa</a>
+                    <a href='/songs/{{this._id}}/edit' class='btn btn-danger btn-sm mt-1' data-toggle='modal'
+                        data-target='#delete-songs-modal' data-id='{{this._id}}' data-name='{{this.name}}'>Xóa</a>
+                </td>
+            </tr>
             {{else}}
-                <tr>
-                    <td colspan='7' class='text-center'>
-                        Bạn chưa đăng bài hát nào
-                        <a href='/songs/create'>Đăng bài hát</a>
-                    </td>
-                </tr>
+            <tr>
+                <td colspan='7' class='text-center'>
+                    Bạn chưa đăng bài hát nào
+                    <a href='/songs/create'>Đăng bài hát</a>
+                </td>
+            </tr>
             {{/each}}
         </tbody>
     </table>
@@ -102,17 +103,47 @@
 <form name='delete-song-form' method='POST'></form>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() { var songId; var deleteForm =
-    document.forms['delete-song-form']; var containerForm = $('form[name="container-form"]'); var btnDeleteSong =
-    document.getElementById('btn-delete-song'); var checkboxAll = $('#checkbox-all'); var songItemCheckbox =
-    $('input[name="songIds[]"]'); var checkAllSubmitBtn = $('.btn-check-all-submit'); // When dialog Confirm clicked
-    $('#delete-songs-modal').on('show.bs.modal', function (event) { var button = $(event.relatedTarget) var id =
-    button.data('id'); var name = button.data('name'); songId = id; }); // When delete song btn clicked
-    btnDeleteSong.onclick = function() { deleteForm.action = `/songs/${songId}?_method=DELETE`; deleteForm.submit(); }
-    // checkbox all change checkboxAll.change(function() { var isCheckedAll = $(this).prop('checked');
-    songItemCheckbox.prop('checked', isCheckedAll); renderCheckAllSubmitBtn(); }); // song item checkbox change
-    songItemCheckbox.change(function() { var isCheckedAll = songItemCheckbox.length ===
-    $('input[name="songIds[]"]:checked').length; checkboxAll.prop('checked', isCheckedAll); renderCheckAllSubmitBtn();
-    }); function renderCheckAllSubmitBtn(){ var checkedOut = $('input[name="songIds[]"]:checked').length; if(checkedOut
-    > 0) { checkAllSubmitBtn.attr('disabled', false); } else { checkAllSubmitBtn.attr('disabled', true); } } })
+    document.addEventListener('DOMContentLoaded', function () {
+        var songId; var deleteForm = document.forms['delete-song-form'];
+        var containerForm = $('form[name="container-form"]');
+        var btnDeleteSong = document.getElementById('btn-delete-song');
+        var checkboxAll = $('#checkbox-all');
+        var songItemCheckbox = $('input[name="songIds[]"]');
+        var checkAllSubmitBtn = $('.btn-check-all-submit');
+
+        // When dialog Confirm clicked
+        $('#delete-songs-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name'); songId = id;
+        });
+
+        // When delete song btn clicked
+        btnDeleteSong.onclick = function () {
+            deleteForm.action = `/songs/${songId}?_method=DELETE`;
+            deleteForm.submit();
+        }
+
+        // checkbox all change 
+        checkboxAll.change(function () {
+            var isCheckedAll = $(this).prop('checked');
+            songItemCheckbox.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        });
+
+        // song item checkbox change
+        songItemCheckbox.change(function () {
+            var isCheckedAll = songItemCheckbox.length === $('input[name="songIds[]"]:checked').length; checkboxAll.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        });
+
+        function renderCheckAllSubmitBtn() {
+            var checkedOut = $('input[name="songIds[]"]:checked').length;
+            if (checkedOut > 0) {
+                checkAllSubmitBtn.attr('disabled', false);
+            } else {
+                checkAllSubmitBtn.attr('disabled', true);
+            }
+        }
+    })
 </script>
