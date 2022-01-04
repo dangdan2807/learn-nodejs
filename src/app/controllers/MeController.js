@@ -4,14 +4,7 @@ const { multipleMongooseToObject } = require('../../util/mongoose');
 class MeController {
     // [GET] /me/stored/songs
     storedSongs(req, res, next) {
-        let songQuery = Song.find({});
-
-        // res.json(res.locals._sort);
-        if (req.query.hasOwnProperty('_sort')) {
-            songQuery = songQuery.sort({
-                [req.query.column]: req.query.type
-            });
-        }
+        let songQuery = Song.find({}).sortable(req);
 
         Promise.all([songQuery, Song.countDocumentsDeleted()])
             .then(([songs, deletedCount]) => {

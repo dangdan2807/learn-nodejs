@@ -21,6 +21,18 @@ const SongSchema = new Schema(
     },
 );
 
+// custom query helpers
+SongSchema.query.sortable = function (req) {
+    if (req.query.hasOwnProperty('_sort')) {
+        const isValidType = ['asc', 'desc'].includes(req.query.type);
+        return this.sort({
+            [req.query.column]: isValidType ? req.query.type : 'desc',
+        });
+    }
+    return this;
+};
+
+// add plugin
 mongoose.plugin(slug);
 SongSchema.plugin(AutoIncrement);
 SongSchema.plugin(mongooseDelete, {
