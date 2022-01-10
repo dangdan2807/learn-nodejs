@@ -1,0 +1,33 @@
+h1 {
+  color: green; }
+
+.card-song-item {
+  margin-top: 16px;
+  max-height: 450px;
+  min-height: 450px;
+  overflow: hidden; }
+
+.card-body {
+  list-style: none; }
+  .card-body a:first-child {
+    text-decoration: none;
+    color: black; }
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 4px; }
+
+.checkbox-select-all-options {
+  width: 160px;
+  margin: 0 16px; }
+
+.btn-mb-add {
+  margin-top: -28px; }
+
+.font-color-black {
+  color: black; }
+
+.row-hover-color:hover {
+  background-color: rgba(0, 0, 0, 0.05); }
