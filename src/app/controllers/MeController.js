@@ -24,6 +24,11 @@ class MeController {
             })
             .catch(next);
     }
+
+    // [GET] /me/logout
+    logout(req, res, next) {
+        res.render('me/comingSoon');
+    }
 }
 
 module.exports = new MeController();

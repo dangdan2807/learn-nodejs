@@ -27,24 +27,16 @@
                     ID
                     {{{sortable '_id' _sort}}}
                 </th>
-                <th scope='col'>
-                    Tên bài hát
+                <th scope='col' colspan='5'>
+                    Thông tin bài hát
                     {{{sortable 'name' _sort}}}
-                </th>
-                <th scope='col'>
-                    Thể hiện
-                </th>
-                <th scope='col'>Nội dung</th>
-                <th scope='col'>
-                    Thời gian tạo
-                    {{{sortable 'createdAt' _sort}}}
                 </th>
                 <th scope='col'></th>
             </tr>
         </thead>
         <tbody>
             {{#each songs}}
-            <tr class='row-hover-color'>
+            <tr class='row-song-item'>
                 <td>
                     <div class='form-check'>
                         <input class='form-check-input' type='checkbox' name='songIds[]' value='{{this._id}}' />
@@ -52,17 +44,21 @@
                         </label>
                     </div>
                 </td>
-                <td scope='row'>{{this._id}}</td>
-                <td>
-                    <a href='/songs/{{this.slug}}' class='font-color-black'>
-                        {{this.name}}
-                    </a>
+                <td scope='row' class="song-number">{{this._id}}</td>
+                <td  colspan='5'>
+                    <div class="song-body row">
+                        <div class="song-info">
+                            <a href='/songs/{{this.slug}}' class='font-color-black song-name'>
+                                {{this.name}}
+                            </a>
+                            <p class="song-singer song-artist">{{this.singer}}</p>
+                            <span>{{this.description}}</sp>
+                        </div>
+                    </div>
                 </td>
-                <td>{{this.singer}}</td>
-                <td>{{this.description}}</td>
-                <td>{{this.createdAt}}</td>
                 <td>
                     <a href='/songs/{{this._id}}/edit' class='btn btn-primary btn-sm'>Sửa</a>
+                    <br>
                     <a href='/songs/{{this._id}}/edit' class='btn btn-danger btn-sm mt-1' data-toggle='modal'
                         data-target='#delete-songs-modal' data-id='{{this._id}}' data-name='{{this.name}}'>Xóa</a>
                 </td>

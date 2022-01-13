@@ -29,5 +29,36 @@ h1 {
 .font-color-black {
   color: black; }
 
-.row-hover-color:hover {
+.row-song-item:hover {
   background-color: rgba(0, 0, 0, 0.05); }
+
+.row-song-item .song-number {
+  font-weight: bold;
+  font-size: 1.2rem; }
+
+.row-song-item .song-info .song-name {
+  font-weight: bold;
+  font-size: 1.3rem; }
+
+.row-song-item .song-info .song-artist {
+  font-size: 1rem;
+  color: gray; }
+
+.coming-soon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .coming-soon-content {
+    font-size: 2rem;
+    padding: 16px;
+    color: gray;
+    text-align: center; }
+
+@media (min-width: 576px) {
+  .coming-soon.col-12 .coming-soon-content {
+    font-size: 3rem; } }
+
+@media (max-width: 992px) {
+  .btn-submit-song {
+    width: 100%; } }

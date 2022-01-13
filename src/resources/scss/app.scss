@@ -38,6 +38,49 @@ h1 {
     color: $black-color;
 }
 
-.row-hover-color:hover {
-    background-color: $hover-color;
+.row-song-item {
+    &:hover {
+        background-color: $hover-color;
+    }
+    & .song-number {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    & .song-info {
+        & .song-name {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        & .song-artist {
+            font-size: 1rem;
+            color: $gray-color;
+        }
+    }
+}
+
+.coming-soon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-content {
+        font-size: 2rem;
+        padding: 16px;
+        color: $gray-color;
+        text-align: center;
+    }
+}
+
+@media (min-width: 576px) {
+    .coming-soon {
+        &.col-12 &-content {
+            font-size: 3rem;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .btn-submit-song {
+        width: 100%;
+    }
 }
